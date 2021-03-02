@@ -1,0 +1,65 @@
+/*Con lo que actualmente conocen y saben pueden realizar un prototipo de aplicación de toma de asistencia diaria,
+con interfaz en consola.
+La estructura de datos del mismo tendrá los datos: Fecha, Nombre, Apellido y Estado (ausente = 0 o presente = 1).
+Los datos del mismo deben guardarse en un archivo txt.
+Suban el ejemplo a un repositorio de Github y compartan el enlace cómo entrega.*/
+
+#include<iostream>
+#include<fstream>
+#include<stdlib.h>
+using namespace std;
+
+struct AsistenciaAlumnos{//Estructura para guardar registros de alumnos
+char fecha[11];
+bool estado;
+string nombre,apellido;
+
+};
+
+AsistenciaAlumnos *alumno = new AsistenciaAlumnos[5];
+
+void tomarLista();
+
+
+int main(){
+
+    tomarLista();
+
+
+return 0;
+}
+
+void tomarLista(){//Función que toma lista a los alumnos
+
+    char aux;//Creo variable que va a evitrar que con un enter no se ingreses datos en la variable fecha
+    ofstream archivo;
+    archivo.open("lista.txt",ios::out);//Abriendo el archivo
+
+    if(archivo.fail()){
+        cout<<"No se pudo abrir el archivo";
+        exit(1);
+   }else{
+        cout<<"El archivo se abrio correctamente"<<endl;
+}
+
+    for(int i=0;i<5;i++){//Ciclo que va ir guardando los datos de los alumnos de uno en uno hasta completar los 20
+
+
+        cout<<"Ingrese la fecha actual:"<<endl;
+        cin.getline(alumno[i].fecha,10,'\n');//Ingreso los datos en la variable fecha de la struct AsistenciaAlumnos
+        archivo<<alumno[i].fecha<<"\n";
+        cout<<"Ingrese nombre alumno:"<<endl;
+        getline(cin,alumno[i].nombre);//Ingresa datos en variable nombre
+        archivo<<alumno[i].nombre<<"\n";
+        cout<<"Ingrese apellido alumno"<<endl;
+        getline(cin,alumno[i].apellido);
+        archivo<<alumno[i].apellido<<"\n";
+        cout<<"Si el alumno esta presente ingrese un 1, de lo contrario un 0"<<endl;
+        cin>>alumno[i].estado;
+        archivo<<alumno[i].estado<<"\n\n";
+        cout<<"\n";
+        cin.get(aux);//Evita que no se guarden datos en la variable fecha despues del primer ciclo
+    }
+
+    archivo.close();//Cierra el archivo con la lista de asistencia guardada en el.
+}
